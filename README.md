@@ -147,3 +147,4 @@ AVCI-CMS/
 
 Copyright © 2026 AVCI CMS Ecosystem & Kurucu Bireysel Fikri Mülkiyet (IP) Kalkanı.  
 All rights reserved. Unauthorized reproduction, distribution, or commercial reuse without explicit written consent is strictly prohibited.
+
