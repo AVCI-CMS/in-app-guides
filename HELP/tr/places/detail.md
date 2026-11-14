@@ -9,6 +9,7 @@ Mekanın fiziksel imkanlarını, haftalık çalışma düzenini ve harita konumu
 ### Lojistik ve Kapasite
 - **Kapasite Limitleri:** Mekanda aynı anda bulunabilecek minimum ve maksimum kişi sayısı.
 - **Çalışma Saatleri:** Haftanın her günü için açılış ve kapanış saatlerini ayrı ayrı girin.
+- **Fiyatlandırma & Kiralama Modeli:** Mekan ücretli kiralamaya açıksa kiralama modelini (Saatlik, Günlük, Etkinlik Başına, Sabit) ve kiralama bedelini belirleyin.
 - **Fiziksel İmkanlar:** (Örn: "Otopark var", "Engelli erişimine uygun") gibi özellikleri açıklama kısmına ekleyin.
 
 ### Konum ve Medya

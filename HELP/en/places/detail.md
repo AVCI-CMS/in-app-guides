@@ -9,6 +9,7 @@ Configure physical capabilities, weekly schedules, and map locations.
 ### Logistics and Capacity
 - **Capacity Limits:** Minimum and maximum number of people allowed simultaneously.
 - **Working Hours:** Set opening and closing times for each day of the week.
+- **Pricing & Rental Model:** Enable paid venue rental if applicable, selecting billing type (Hourly, Daily, Per Event, Fixed) and rental fee.
 - **Facilities:** Add features like "Parking available" or "Wheelchair accessible" in the description.
 
 ### Location and Media

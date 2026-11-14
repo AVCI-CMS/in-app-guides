@@ -23,7 +23,8 @@ The Place API manages physical venues, event locations, and geographical interes
 | `name` | `string` | The venue name. |
 | `capacity` | `object` | `{ min: number, max: number }` visitor limits. |
 | `working` | `array` | Daily operational hours (0-6 for Mon-Sun). |
-| `address` | `object` | Detailed physical address and district info. |
+| `pricing` | `object` | `{ isPaid: boolean, pricingType?: 'HOURLY'|'DAILY'|'PER_EVENT'|'FIXED', amount?: number, currency?: string }` rental rate. |
+| `address` | `object` | Detailed physical address, coordinates, and district info. |
 | `area` | `array` | List of categories/neighborhoods this place belongs to. |
 
 ---
@@ -53,7 +54,7 @@ Retrieves a condensed version of the venue profile, optimized for mobile cards a
 ### Get Place Details
 `GET /v1/place/:slug`
 
-Retrieves the exhaustive venue profile, including gallery images, full capacity details, and weekly schedule.
+Retrieves the exhaustive venue profile, including gallery images, full capacity details, pricing model, and weekly schedule.
 
 **Response Data (`data`):**
 ```json
@@ -65,11 +66,24 @@ Retrieves the exhaustive venue profile, including gallery images, full capacity 
   "working": [
     { "day": 1, "hours": { "start": "09:00", "end": "18:00" } }
   ],
+  "pricing": {
+    "isPaid": true,
+    "pricingType": "DAILY",
+    "amount": 25000,
+    "currency": "TRY"
+  },
   "address": { "city": "Istanbul", "district": "Besiktas" },
   "logo": { "url": "..." },
   "gallery": [ { "url": "..." } ]
 }
 ```
+
+---
+
+### Get Place Details by ID
+`GET /v1/place/id/:_id`
+
+Retrieves the exhaustive venue profile directly using its database `_id` identifier.
 
 ---
 

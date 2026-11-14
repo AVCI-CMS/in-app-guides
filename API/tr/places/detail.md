@@ -20,10 +20,23 @@ Mekanın tüm operasyonel verilerini ve medya ögelerini döndürür.
   "working": [
     { "day": 1, "hours": { "start": "09:00", "end": "18:00" } }
   ],
+  "pricing": {
+    "isPaid": true,
+    "pricingType": "DAILY",
+    "amount": 25000,
+    "currency": "TRY"
+  },
   "address": { "city": "İstanbul", "district": "Beşiktaş" },
   "gallery": [ { "url": "..." } ]
 }
 ```
+
+---
+
+### 2. ID ile Mekan Detayı
+`GET /v1/place/id/:_id`
+
+Mekanın doğrudan MongoDB benzersiz kimliğiyle profilini getirir.
 
 ---
 
