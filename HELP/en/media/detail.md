@@ -1,22 +1,24 @@
-# Media Management: File Detail and Optimization
+# Media Management: File Detail, Visual Editor, and Optimization
 
-Access technical details of your selected media, perform cropping, and retrieve URLs for different dimensions.
-
----
-
-## 🖼️ Editing and URL Info
-
-### Access URLs
-Every media file is automatically distributed via CDN.
-- **Original File:** The primary file address uploaded to the system.
-- **Thumbnail:** Small-sized address optimized for list pages.
-- **Featured:** Standard address for blog/product cover formats.
-
-### Visual Settings
-- **Alt Text:** Enter a description for SEO and accessibility.
-- **Crop:** Define the focus point of the visual.
+Manage asset details, crop images to precise presets, rotate, and access optimized CDN addresses.
 
 ---
 
-## 💡 Tip
-Every visual you upload is automatically converted to **WebP** format for optimization, keeping your website's load speed at maximum.
+## 🎨 Built-in Visual Editor (`ImageEditor`)
+Click the "Edit" button on any selected media to open the canvas editor:
+- **Aspect Ratio Presets:** Select from `Free`, `1:1` (Square/Logo), `16:9` (Featured/Video), `21:9` (Cover Banner), or `4:3` (Standard).
+- **Rotation & Angle:** Use the 90° flip buttons or the fine rotation slider (-45° to +45°) to straighten tilted photos.
+- **Zoom & Pan:** Smoothly zoom from 0.1x to 3.0x to focus on important details.
+- **Save Actions:** Use "Save" to update the file in place or "Save as New" to create a transformed duplicate.
+
+---
+
+## 🖼️ Media Explorer & Organization
+- **Hierarchical Folders:** Organize large collections with the "New Folder" button (e.g. `/summer-2026/campaign/`).
+- **Live Search:** Quickly filter assets by typing the filename or title.
+- **One-Click CDN Copy:** Copy the public URL for instant embedding in blogs or emails.
+
+---
+
+## 💡 On-The-Fly Optimization
+Every visual uploaded to AVCI CMS is served via the `resizeonfly` engine. When you request an image with dimensions (e.g., `?w=400`), it is dynamically scaled and served in modern **WebP** or **AVIF** format, keeping site load speed lightning fast.

@@ -1,49 +1,56 @@
-# Media API Guide
+# Media API & On-The-Fly Resizing (`resizeonfly`)
 
-The Media API provides dynamic image processing and access to workspace-specific visual assets like logos and favicons. It supports high-performance on-the-fly transformations via a dedicated worker.
+The Media API provides dynamic, real-time image processing (`resizeonfly`) and direct access to tenant-specific visual assets like logos and favicons. It transforms images on-demand using libvips/Sharp without pre-generating static files.
 
 ## Base URL
 `GET /v1/images`
 
 ---
 
-## Image Transformation
+## On-The-Fly Image Transformation
 `GET /v1/:tenant/images/:type/:filename`
 
-Processes an image based on the provided tenant and transformation parameters.
+Processes and streams an image according to dimension, format, and fit parameters.
 
 **Path Parameters:**
-- `tenant`: The workspace ID or slug.
-- `type`: Category of the image (e.g., `product`, `blog`, `avatar`).
+- `tenant`: The workspace ID or slug (e.g., `avci`, `my-store`).
+- `type`: Category of the image (`product`, `blog`, `avatar`, `cover`, `event`, `general`).
 - `filename`: The unique name of the stored image.
 
 **Query Parameters:**
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `w` | `number` | - | Width in pixels. |
-| `h` | `number` | - | Height in pixels. |
-| `q` | `number` | 80 | Quality (1-100). |
-| `f` | `string` | - | Target format (`webp`, `jpeg`, `png`). |
-| `fit` | `string` | `cover` | `cover`, `contain`, `fill`, `inside`, `outside`. |
+| `w` | `number` | - | Width in pixels (e.g. `?w=400`). Height is computed automatically. |
+| `h` | `number` | - | Height in pixels (e.g. `?h=300`). Width is computed automatically. |
+| `q` | `number` | `85` | Quality (`1` to `100`). |
+| `f` | `string` | `auto` | Target format (`webp`, `avif`, `jpeg`, `png`, `auto`). Auto negotiates via `Accept` header. |
+| `fit` | `string` | `inside` | Fitting strategy: `inside` (default), `cover`, `contain`, `fill`, `outside`. |
+| `auto` | `boolean` | `false` | When `true`, automatically detects device type (mobile/desktop) and adapts width & quality. |
 
-**Example:**
-`GET /v1/my-workspace/images/product/item-01.jpg?w=800&f=webp`
+**Practical Examples:**
+- **Product Listing Thumbnail:**
+  `GET /v1/my-store/images/product/item-01.jpg?w=300&f=webp`
+- **Hero Cover Banner (21:9 Fixed Crop):**
+  `GET /v1/my-store/images/cover/banner.jpg?w=1200&h=514&fit=cover&f=webp&q=90`
+- **Device-Adaptive Delivery:**
+  `GET /v1/my-store/images/blog/post-hero.jpg?auto=true`
 
 ---
 
-## Global Assets
-These endpoints automatically resolve the active workspace from the session or headers.
+## Global Identity Assets
+These endpoints automatically resolve the active workspace from session or headers and support all resize query parameters.
 
 ### Get Logo
-`GET /v1/logo`
+`GET /v1/logo` or `GET /v1/logo/:tenant/:filename`
+Example: `GET /v1/logo?w=200&f=webp`
 
 ### Get Favicon
-`GET /v1/favicon`
-
-*Note: Logo and Favicon endpoints support the same transformation query parameters as standard images.*
+`GET /v1/favicon` or `GET /v1/favicon/:tenant/:filename`
+Example: `GET /v1/favicon?w=64&h=64`
 
 ---
 
-## Technical Details
-- **CORS & CORP**: Every image response includes `Access-Control-Allow-Origin: *` and `Cross-Origin-Resource-Policy: cross-origin` for seamless frontend integration.
-- **Cache**: Transformed images follow the workspace's caching policies and are served via a global CDN when enabled.
+## Technical Performance Details
+- **Immutable CDN Caching:** All transformed images return `Cache-Control: public, max-age=31536000, immutable`.
+- **Dimensions Headers:** Responses include `X-Image-Width` and `X-Image-Height` reporting the rendered resolution.
+- **Cross-Origin Accessibility:** Headers `Access-Control-Allow-Origin: *` and `Cross-Origin-Resource-Policy: cross-origin` enable unblocked embedding across web and mobile apps.
