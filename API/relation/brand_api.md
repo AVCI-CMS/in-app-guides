@@ -66,6 +66,14 @@ Retrieves the exhaustive brand profile, including team members, contact info, an
 
 ---
 
+## Brand Showcase Self-Profile (`/profil/sayfam`)
+
+Authenticated brand owners can view and manage their public brand showcase directly from their portal:
+- `GET /v1/brand/me`: Fetch currently logged-in brand profile.
+- `PUT /v1/brand/me` or `PATCH /v1/brand/me`: Update brand showcase presentation details (`logo`, `coverImage`, `description`, `attributes`, `gallery`, `socialMedia`, `address`).
+
+---
+
 ## Social & Interactions
 - `/v1/brand/category`: Browse brand categories.
 - `/v1/brand/like/:slug`: Follow or like a brand.

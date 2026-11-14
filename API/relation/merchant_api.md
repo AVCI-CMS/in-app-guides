@@ -79,6 +79,27 @@ Retrieves the exhaustive business profile, including corporate data, bank info, 
 
 ---
 
+## Artisan Showcase Self-Profile (`/profil/sayfam`)
+
+Authenticated sellers and craftspeople can inspect and update their public-facing storefront showcase profile directly (e.g. from `/profil/sayfam`).
+
+### Endpoints
+- `GET /v1/merchant/me`: Fetch current vendor showcase profile.
+- `PUT /v1/merchant/me` or `PATCH /v1/merchant/me`: Update storefront visuals and information.
+
+### Editable Fields
+- `logo` / `image`: Storefront logo / avatar.
+- `coverImage` / `cover`: Public header banner.
+- `description` / `biography`: Artisan story and workshop background.
+- `attributes`: Custom attributes (techniques, awards, craft specialties).
+- `gallery`: Photos of workshop, studio, or craft process.
+- `socialMedia`: Instagram, website, or social links.
+- `address`: Public workshop or studio address.
+
+> **Security Note:** Sensitive fields including `status`, `commitionRate`, `isVerified`, and payment configurations are strictly restricted from self-service alteration.
+
+---
+
 ## Social & Interactions
 - `/v1/merchant/category`: Browse merchant categories.
 - `/v1/merchant/follow/:slug`: Follow a merchant for updates.

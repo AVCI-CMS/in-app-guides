@@ -38,6 +38,7 @@ This document provides a complete map of all documented Public API modules.
 - [Page API](file:///Users/mertcanavci/Sites/AVCI/AVCI-CMS/guides/API/content/page_api.md) - Dynamic CMS pages.
 - [News API](file:///Users/mertcanavci/Sites/AVCI/AVCI-CMS/guides/API/content/news_api.md) - Articles and Announcements.
 - [Word API](file:///Users/mertcanavci/Sites/AVCI/AVCI-CMS/guides/API/content/word_api.md) - Dictionary and Glossary.
+- [Team API](file:///Users/mertcanavci/Sites/AVCI/AVCI-CMS/guides/API/content/team_api.md) - Corporate team and staff directory.
 
 ## 🤝 Relationship Info
 - [Brand API](file:///Users/mertcanavci/Sites/AVCI/AVCI-CMS/guides/API/relation/brand_api.md) - Brand profiles.
@@ -64,6 +65,7 @@ This document provides a complete map of all documented Public API modules.
 - [Terms API](file:///Users/mertcanavci/Sites/AVCI/AVCI-CMS/guides/API/services/terms_api.md) - Legal agreements.
 
 ## 📈 Technical & SEO
+- [Static & Geographic API](file:///Users/mertcanavci/Sites/AVCI/AVCI-CMS/guides/API/technical/static_api.md) - Cities, districts, neighborhoods, and GİB tax offices.
 - [Technical & SEO Guide](file:///Users/mertcanavci/Sites/AVCI/AVCI-CMS/guides/API/technical/seo_technical_api.md) - Sitemap and RSS.
 - [Integrations & Marketplace API](file:///Users/mertcanavci/Sites/AVCI/AVCI-CMS/guides/API/technical/INTEGRATIONS_MARKETPLACE_API.md) - Browsing and managing applications.
 - [JSON-LD API](file:///Users/mertcanavci/Sites/AVCI/AVCI-CMS/guides/API/technical/jsonld_api.md) - Structured data schemas.

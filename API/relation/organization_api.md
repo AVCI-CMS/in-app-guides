@@ -67,6 +67,14 @@ Retrieves the exhaustive corporate profile, including contact details, bank info
 
 ---
 
+## Umbrella Organization Showcase Self-Profile (`/profil/sayfam`)
+
+Authenticated umbrella organization managers (cooperatives, chambers of commerce, trade federations) can view and update their public directory showcase:
+- `GET /v1/organization/me`: Fetch current organization profile.
+- `PUT /v1/organization/me` or `PATCH /v1/organization/me`: Update organization showcase presentation (`logo`, `coverImage`, `description`, `attributes`, `gallery`, `socialMedia`, `address`).
+
+---
+
 ## Social & Interactions
 - `/v1/organization/category`: Browse organization categories.
 - `/v1/organization/like/:slug`: Follow or like an organization.

@@ -33,8 +33,24 @@ Retrieves districts for the specified city.
 ```json
 {
   "districtId": 450,
-  "name": "Beşiktaş",
+  "name": "Kadıköy",
   "cityId": 34
+}
+```
+
+---
+
+### List Neighborhoods
+`GET /v1/static/neighborhoods/:districtId`
+
+Retrieves neighborhoods (mahalleler) for the specified district.
+
+**Response Data (`data` array item):**
+```json
+{
+  "neighborhoodId": 12040,
+  "name": "Caferağa Mah.",
+  "districtId": 450
 }
 ```
 
@@ -43,16 +59,26 @@ Retrieves districts for the specified city.
 ### Tax Administrations
 `GET /v1/static/tax-administration/:cityId`
 
-Retrieves a list of valid tax offices (Vergi Dairesi) for a specific city.
+Retrieves a list of valid Revenue Administration (GİB) tax offices (Vergi Dairesi) for a specific city.
+
+#### Plate Code Normalization
+The backend automatically normalizes plate numbers (`1`, `01`, `001`, `34`, `034`) to the corresponding 3-digit GİB province identifier.
+
+#### Query Parameters
+- `district` *(optional)*: Case-insensitive filter to match tax offices located in a specific district (e.g. `?district=Kadıköy`).
+
+**Example Request:**
+`GET /v1/static/tax-administration/34?district=Kadıköy`
 
 **Response Data (`data` array item):**
 ```json
 {
   "officeCode": "34260",
-  "name": "Beşiktaş Vergi Dairesi",
+  "name": "Kadıköy Vergi Dairesi Müdürlüğü",
   "cityId": 34
 }
 ```
+
 
 ---
 
