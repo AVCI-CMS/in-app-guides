@@ -31,5 +31,12 @@ If the order contains an event:
 
 ---
 
-## 🧾 Cancellation and Refunds
-- `POST /v1/order/cancel/:id`: Requests cancellation (subject to legal/policy time limits).
+## 🧾 Cancellations, Returns and Vendor Orders
+- **Cancellation & Return Tickets:** Storefront users initiate cancellations or return requests through the Support Ticket module (`POST /v1/ticket` with `type: "CANCELLATION"` or `"RETURN"`, `relatedId: orderId`).
+- **Vendor Sub-Orders:** Marketplace sellers fetch isolated sub-orders via `GET /v1/order/vendor/:subOrderId`.
+
+---
+
+## 🔗 Documentation Link
+For detailed guides and SDK usage, visit [AVCI CMS Order Documentation](https://doc.avcicms.com/api/finance/order).
+

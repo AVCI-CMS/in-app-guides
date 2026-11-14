@@ -23,6 +23,11 @@ Giriş yapmış kullanıcının geçmiş ve aktif tüm siparişlerini döndürü
 
 ---
 
+### 🛍️ Satıcı Siparişleri (Pazaryeri)
+- `GET /v1/order/vendor`: Giriş yapmış satıcı hesabının izole alt siparişlerini listeler.
+
+---
+
 ## 🚦 Sipariş Durumları
 | Durum | Açıklama |
 | :--- | :--- |
@@ -30,3 +35,9 @@ Giriş yapmış kullanıcının geçmiş ve aktif tüm siparişlerini döndürü
 | `COMPLETED` | Başarıyla tamamlanmış (Biletler üretilmiş). |
 | `SHIPPED` | Fiziksel ürün kargoya verilmiş. |
 | `CANCELLED` | İptal edilmiş veya iade edilmiş sipariş. |
+
+---
+
+## 🔗 Dokümantasyon
+Detaylı teknik kılavuz için [AVCI CMS Sipariş Dokümantasyonu](https://doc.avcicms.com/api/finance/order) sayfasını ziyaret edin.
+

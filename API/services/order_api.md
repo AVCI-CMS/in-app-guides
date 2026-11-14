@@ -5,6 +5,8 @@ The Order API handles the finalization of purchases and provides exhaustive trac
 ## Base URL
 `GET /v1/order`
 
+> **Note:** Management endpoints (`/v1/order/management/*`) are private and strictly reserved for the internal admin panel (`frontend/`). They are not exposed to external SDKs or public integrations. For full documentation, visit [AVCI CMS Order Documentation](https://doc.avcicms.com/api/finance/order).
+
 ---
 
 ## Order Statuses
@@ -125,3 +127,48 @@ Retrieves the full profile of an order, including individual sub-orders (for mul
   ]
 }
 ```
+
+---
+
+### Vendor Sub-Orders (Isolated)
+
+Merchants and marketplace sellers query their isolated sub-orders using their seller API credentials.
+
+#### List Vendor Sub-Orders
+`GET /v1/order/vendor`
+
+Query params: `page`, `limit`, `status`.
+
+#### Get Vendor Sub-Order
+`GET /v1/order/vendor/:subOrderId`
+
+Returns the merchant's items, recipient delivery address, and merchant-specific payout details.
+
+---
+
+### Cancellations and Returns via Ticket Module
+
+Storefront customers do not have access to backend management endpoints. To request an order cancellation or return, customers submit a ticket via the **Ticket API**:
+
+```http
+POST /v1/ticket
+Content-Type: application/json
+
+{
+  "type": "CANCELLATION", // or "RETURN"
+  "title": "Order Cancellation Request - ORD-12345",
+  "message": "I would like to cancel my order before shipment.",
+  "relatedEntity": "order",
+  "relatedId": "ORD-12345"
+}
+```
+
+The request appears in the management panel under Support & Tickets for the operator or seller to review and take action.
+
+---
+
+## 🔗 Official Documentation
+For complete technical details, code samples, and workflow guides:
+- [AVCI CMS Order API Reference](https://doc.avcicms.com/api/finance/order)
+- [Order & Logistics Multi-Role Guide](https://doc.avcicms.com/guides/modules/finance-logistics/orders)
+

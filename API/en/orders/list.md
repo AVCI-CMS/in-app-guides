@@ -23,6 +23,11 @@ Returns all past and active orders for the authenticated user.
 
 ---
 
+### 🛍️ Vendor Orders (Marketplace)
+- `GET /v1/order/vendor`: Isolated sub-order listing for authenticated merchant accounts.
+
+---
+
 ## 🚦 Order Statuses
 | Status | Description |
 | :--- | :--- |
@@ -30,3 +35,9 @@ Returns all past and active orders for the authenticated user.
 | `COMPLETED` | Successfully finished (Tickets generated). |
 | `SHIPPED` | Physical goods handed to the courier. |
 | `CANCELLED` | Order cancelled or refunded. |
+
+---
+
+## 🔗 Documentation Link
+For detailed guides and SDK usage, visit [AVCI CMS Order Documentation](https://doc.avcicms.com/api/finance/order).
+

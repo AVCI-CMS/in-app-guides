@@ -12,9 +12,9 @@ The Basket API enables users to manage shopping carts containing both physical p
 Returns the active basket for the authenticated user, including items and totals.
 
 ### 2. Add Items to Basket
-`POST /v1/basket/add`
+`POST /v1/basket/add/:basketId`
 
-Adds new products or event tickets to the cart.
+Adds new products or event tickets to the specified cart.
 **Request Body:**
 ```json
 {
@@ -24,13 +24,20 @@ Adds new products or event tickets to the cart.
 }
 ```
 
-### 3. Update Quantity / Clear
-- `PUT /v1/basket/update/:itemId/increase`: Increments quantity.
-- `PUT /v1/basket/update/:itemId/decrease`: Decrements quantity.
-- `DELETE /v1/basket`: Clears the entire basket.
+### 3. Update Quantity / Currency / Clear
+- `PUT /v1/basket/update/:basketId/:itemId/increase`: Increments quantity.
+- `PUT /v1/basket/update/:basketId/:itemId/decrease`: Decrements quantity.
+- `PUT /v1/basket/currency/:basketId`: Changes cart active currency.
+- `DELETE /v1/basket/clear/:basketId`: Clears the entire basket.
 
 ---
 
 ## 🎟️ Tickets and Reservations
-- **Capacity Lock:** When event items are added to the basket, the platform may temporarily reserve capacity (e.g., for 10 min).
+- **Capacity Lock:** When event items are added to the basket, the platform temporarily reserves capacity (e.g., for 10 min).
 - **Participant Info:** If the basket contains `event` or `route` items, participant information is required at checkout.
+
+---
+
+## 🔗 Documentation Link
+For detailed guides and SDK usage, visit [AVCI CMS Basket Documentation](https://doc.avcicms.com/api/finance/basket).
+

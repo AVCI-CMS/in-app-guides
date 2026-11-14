@@ -31,5 +31,12 @@ Eğer sipariş bir etkinlik içeriyorsa:
 
 ---
 
-## 🧾 İptal ve İade
-- `POST /v1/order/cancel/:id`: Siparişi iptal etme talebi gönderir (Yasal süreler dahilinde).
+## 🧾 İptal, İade ve Satıcı Siparişleri
+- **İptal & İade Talepleri (Ticket):** Son kullanıcı iptal ve iade talepleri Destek Bilet modülü üzerinden iletilir (`POST /v1/ticket` - `type: "CANCELLATION"` veya `"RETURN"`, `relatedId: orderId`).
+- **Satıcı Sipariş Detayı:** Pazar yeri satıcıları kendilerine ait alt siparişi `GET /v1/order/vendor/:subOrderId` ile sorgular.
+
+---
+
+## 🔗 Dokümantasyon
+Detaylı teknik kılavuz için [AVCI CMS Sipariş Dokümantasyonu](https://doc.avcicms.com/api/finance/order) sayfasını ziyaret edin.
+
