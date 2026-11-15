@@ -130,6 +130,49 @@ Retrieves the full profile of an order, including individual sub-orders (for mul
 
 ---
 
+### Cancel Order Directly (Before Shipment)
+`POST /v1/order/:orderId/cancel`
+
+Allows customers to directly cancel their orders before the package has been handed to the carrier (`WAITING`, `PREPARING`, or `PENDING_PAYMENT`).
+Instantly releases product reservations/stock (`restoreStockCounts`), rolls back coupon usage, and issues a payment void/refund with the payment provider.
+
+**Request Body:**
+```json
+{
+  "reason": "Wrong item or size selected",
+  "reasonCode": "BUYER_CANCELLED"
+}
+```
+
+**Response (200 OK):**
+```json
+{
+  "status": "success",
+  "message": "Order canceled successfully",
+  "data": {
+    "orderId": "ORD-12345",
+    "status": "CANCELED",
+    "refundResult": { "status": "success", "type": "VOID", "amount": 450.50 }
+  }
+}
+```
+
+---
+
+### Saved Payment Cards (with Primary / Default Card)
+Manages stored credit cards with full PCI-DSS compliance. AVCI CMS never stores PAN, CVV, or expiry dates; card tokens are maintained by the payment provider, and the customer's preferred primary card token is tracked on their account.
+
+- **List Saved Cards:** `GET /v1/order/saved-cards`  
+  Returns stored cards enriched with `isPrimary: boolean`. The primary card is always sorted first.
+- **Store Card:** `POST /v1/order/saved-cards`  
+  Accepts card details and optional `"isPrimary": true`. Automatically marks the first saved card as primary.
+- **Delete Card:** `DELETE /v1/order/saved-cards/:id`  
+  Deletes card token. If the deleted card was primary, automatically promotes the next available card to primary.
+- **Set Primary Card:** `PUT /v1/order/saved-cards/:id/primary`  
+  Sets the card as default for future 1-click checkouts and returns the updated card list.
+
+---
+
 ### Vendor Sub-Orders (Isolated)
 
 Merchants and marketplace sellers query their isolated sub-orders using their seller API credentials.
@@ -144,26 +187,47 @@ Query params: `page`, `limit`, `status`.
 
 Returns the merchant's items, recipient delivery address, and merchant-specific payout details.
 
----
+#### Cancel Assigned Sub-Order (Vendor)
+`POST /v1/order/management/sub-order/:subOrderId/cancel`
 
-### Cancellations and Returns via Ticket Module
+Marketplace seller cancels their unfulfilled sub-order (e.g. out of stock). Restores merchant item stock, calculates customer refund via `RefundAllocationService`, and recalculates parent order status.
 
-Storefront customers do not have access to backend management endpoints. To request an order cancellation or return, customers submit a ticket via the **Ticket API**:
-
-```http
-POST /v1/ticket
-Content-Type: application/json
-
+```json
 {
-  "type": "CANCELLATION", // or "RETURN"
-  "title": "Order Cancellation Request - ORD-12345",
-  "message": "I would like to cancel my order before shipment.",
-  "relatedEntity": "order",
-  "relatedId": "ORD-12345"
+  "reason": "Item out of stock / Cannot fulfill",
+  "autoRefund": true,
+  "restoreStock": true,
+  "isSellerFault": true
 }
 ```
 
-The request appears in the management panel under Support & Tickets for the operator or seller to review and take action.
+---
+
+### Cancellations and Returns Workflow
+
+AVCI CMS provides a two-tiered cancellation and return architecture:
+
+1. **Pre-Shipment (Instant Direct Cancellation):**
+   - Customer endpoint: `POST /v1/order/:orderId/cancel`
+   - Vendor endpoint: `POST /v1/order/management/sub-order/:subOrderId/cancel`
+   - Admin endpoint: `POST /v1/order/management/:id/cancel`
+   - Triggered while status is `WAITING`, `PREPARING`, or `PENDING_PAYMENT`. Completely automated: stocks are restored, coupons rolled back, and payments refunded/voided immediately.
+
+2. **Post-Shipment (RMA Return Flow via Ticket Module):**
+   - Once items are shipped (`ON_SHIPMENT`, `DONE`), direct cancellation is closed. Customers request a return or dispute via the **Ticket API**:
+   ```http
+   POST /v1/ticket
+   Content-Type: application/json
+
+   {
+     "type": "RETURN",
+     "title": "Return Request - ORD-12345",
+     "message": "I would like to return the ceramic bowl.",
+     "relatedEntity": "order",
+     "relatedId": "ORD-12345"
+   }
+   ```
+   - Store operators and sellers review the dispute in the management console, issue a return shipping barcode, inspect returned goods, and process the refund via `/order/management/sub-order/:id/refund`.
 
 ---
 

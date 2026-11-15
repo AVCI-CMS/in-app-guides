@@ -28,6 +28,15 @@ Giriş yapmış kullanıcının geçmiş ve aktif tüm siparişlerini döndürü
 
 ---
 
+### 💳 Kayıtlı Kredi Kartları & Varsayılan (Primary) Kart
+AVCI CMS hiçbir kart numarasını veya CVC bilgisini veritabanında saklamaz (PCI-DSS uyumlu). Sağlayıcı (Iyzico vb.) token'ları üzerinden çalışır:
+- `GET /v1/order/saved-cards`: Kayıtlı kartları listeler (`isPrimary: true/false`, varsayılan kart en başta sıralanır).
+- `POST /v1/order/saved-cards`: Yeni kart kaydeder (`isPrimary: true` gönderilirse doğrudan varsayılan yapılır).
+- `DELETE /v1/order/saved-cards/:id`: Kartı siler (Varsayılan silinirse kalanlardan ilki yeni varsayılan atanır).
+- `PUT /v1/order/saved-cards/:id/primary`: Seçilen kartı tek tıkla ödemeler için **Varsayılan Kart** olarak belirler.
+
+---
+
 ## 🚦 Sipariş Durumları
 | Durum | Açıklama |
 | :--- | :--- |

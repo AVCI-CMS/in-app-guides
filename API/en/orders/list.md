@@ -28,6 +28,15 @@ Returns all past and active orders for the authenticated user.
 
 ---
 
+### 💳 Stored Credit Cards & Primary (Default) Card
+Fully PCI-DSS compliant token-based storage (via Iyzico, Stripe):
+- `GET /v1/order/saved-cards`: Lists stored cards enriched with `isPrimary: true/false` (primary card is always sorted first).
+- `POST /v1/order/saved-cards`: Stores a new card (can set `isPrimary: true` to make it default immediately).
+- `DELETE /v1/order/saved-cards/:id`: Deletes card token (if default is deleted, the next card is promoted to primary).
+- `PUT /v1/order/saved-cards/:id/primary`: Sets selected card as the customer's **Primary Card** for 1-click checkout.
+
+---
+
 ## 🚦 Order Statuses
 | Status | Description |
 | :--- | :--- |

@@ -32,7 +32,36 @@ If the order contains an event:
 ---
 
 ## 🧾 Cancellations, Returns and Vendor Orders
-- **Cancellation & Return Tickets:** Storefront users initiate cancellations or return requests through the Support Ticket module (`POST /v1/ticket` with `type: "CANCELLATION"` or `"RETURN"`, `relatedId: orderId`).
+
+### 1. Direct Pre-Shipment Order Cancellation (Customer)
+`POST /v1/order/:orderId/cancel`
+
+Customers can directly cancel orders before carrier dispatch (`WAITING`, `PREPARING`, `PENDING_PAYMENT`). Product reservations are instantly restored, coupon usages rolled back, and provider payments voided or refunded.
+
+```json
+{
+  "reason": "Wrong size or address entered",
+  "reasonCode": "BUYER_CANCELLED"
+}
+```
+
+### 2. Marketplace Vendor Sub-Order Cancellation
+`POST /v1/order/management/sub-order/:subOrderId/cancel`
+
+Sellers cancel an unfulfilled sub-order (e.g. out of stock). Proportional customer refund is computed automatically via `RefundAllocationService`.
+
+```json
+{
+  "reason": "Item out of stock",
+  "autoRefund": true,
+  "restoreStock": true,
+  "isSellerFault": true
+}
+```
+
+### 3. Post-Shipment RMA Return Requests
+Once orders are shipped (`ON_SHIPMENT`, `DONE`), direct cancellation is closed. Customers initiate return requests via the Support Ticket module (`POST /v1/ticket` with `type: "RETURN"`, `relatedId: orderId`).
+
 - **Vendor Sub-Orders:** Marketplace sellers fetch isolated sub-orders via `GET /v1/order/vendor/:subOrderId`.
 
 ---
