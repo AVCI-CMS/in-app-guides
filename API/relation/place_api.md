@@ -93,3 +93,31 @@ Retrieves the exhaustive venue profile directly using its database `_id` identif
 - `/v1/place/view/:slug`: Log a location view.
 - `/v1/place/question/:slug`: Venue-specific Q&A.
 - `/v1/place/share/:slug`: Track venue profile sharing.
+
+---
+
+## Place Ownership & Event Hosting Access Rules
+
+Places in AVCI CMS have strict multi-tenant ownership and delegation rules:
+
+### Ownership & Scope Fields
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `ownerType` | `'WORKSPACE' \| 'MERCHANT' \| 'BRAND' \| 'ORGANIZATION'` | Entity category that owns this venue. |
+| `ownerEntity` | `ObjectId` | ID of the Merchant, Brand, or Organization. |
+| `isPublicPool` | `boolean` | If true, any authorized seller/brand in the workspace can book events here. |
+| `inheritToAffiliates`| `boolean` | If true (when owned by an Organization), all affiliated merchants can book events here. |
+| `authorizedMerchants`| `ObjectId[]` | Specific merchants granted hosting permissions. |
+| `rentals` | `PlaceRental[]` | Leased periods `{ renterType, renterEntity, startDate, endDate }`. |
+
+### Event Creation Authorization Check
+When creating or updating an event with a `place`:
+1. **Platform Admins / Owners (`AVCI`, `WORKSPACE_OWNER`, `WORKSPACE_ADMIN`)** can use any place in the workspace.
+2. **Merchants & Brands** can only book a place if:
+   - They **own** the place (`ownerType === 'MERCHANT' && ownerEntity === user.merchantId`), OR
+   - The place is in the **public pool** (`isPublicPool: true`), OR
+   - The place is owned by an **Organization** the merchant is affiliated with and `inheritToAffiliates: true`, OR
+   - The merchant is explicitly listed in `authorizedMerchants`, OR
+   - The merchant has an **active rental** covering the event dates.
+3. If unauthorized, the API returns `403 Forbidden` (`FORBIDDEN_ACCESS`).
+
